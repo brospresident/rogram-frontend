@@ -1,25 +1,53 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import 'tachyons';
+import Particles from 'react-particles-js';
+import Register from './components/Register/Register';
+import Login from './components/Login/Login';
+import Home from './components/Home/Home'
+import {
+  BrowserRouter as Router,
+  //Switch,
+  Route,
+  //Link
+} from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const initialState = {};
+export default class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      atLogin: true,
+      atRegister: false,
+      user: {
+        id: null,
+        name: '',
+        email: '',
+        nickname: ''
+      }
+    };
+  }
+
+  onClickRegister = () => {
+    this.setState({atLogin: false, atRegister: true})
+  }
+
+  loadUser = (user) => {
+    this.setState({user: user});
+  }
+
+  render() {
+    return (
+      <Router>
+        <div>
+          <Route exact path = '/'>
+            <Particles className = 'particles'/>
+            {this.state.atLogin === true && this.state.user.id === null && <Login loadUser={this.loadUser} onClickRegister={this.onClickRegister} onSubmitLogin={this.onSubmitLogin}/>}
+            {this.state.atRegister === true && this.state.user.id === null && <Register loadUser={this.loadUser}/>}
+            {this.state.user.id !== null && <Home user={this.state.user}/>}
+          </Route>
+        </div>
+      </Router>
+    )
+  }
 }
-
-export default App;
