@@ -12,7 +12,16 @@ import {
   //Link
 } from "react-router-dom";
 
-const initialState = {};
+const initialState = {
+  atLogin: true,
+  atRegister: false,
+  user: {
+    id: null,
+    name: '',
+    email: '',
+    nickname: ''
+  }
+};
 export default class App extends Component {
   constructor() {
     super();
@@ -36,6 +45,10 @@ export default class App extends Component {
     this.setState({user: user});
   }
 
+  onSignOut = () => {
+    this.setState(initialState);
+  }
+
   render() {
     return (
       <Router>
@@ -44,7 +57,7 @@ export default class App extends Component {
             <Particles className = 'particles'/>
             {this.state.atLogin === true && this.state.user.id === null && <Login loadUser={this.loadUser} onClickRegister={this.onClickRegister} onSubmitLogin={this.onSubmitLogin}/>}
             {this.state.atRegister === true && this.state.user.id === null && <Register loadUser={this.loadUser}/>}
-            {this.state.user.id !== null && <Home user={this.state.user}/>}
+            {this.state.user.id !== null && <Home user={this.state.user} signOutMethod={this.onSignOut}/>}
           </Route>
         </div>
       </Router>

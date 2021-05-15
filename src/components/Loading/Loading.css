@@ -1,0 +1,23 @@
+.circle {
+    position: relative;
+    left: 49.5vw;
+    top: 49vh;
+
+    animation: circleRotate 1s linear infinite;
+}
+
+.text {
+    position: relative;
+    top: 350px;
+}
+
+@keyframes circleRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+
+}

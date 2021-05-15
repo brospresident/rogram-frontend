@@ -6,7 +6,8 @@ export default class Login extends Component {
 
         this.state = {
             email: '',
-            pass: ''
+            pass: '',
+            errorHandler: null
         }
     }
 
@@ -34,6 +35,7 @@ export default class Login extends Component {
             if (user.id) {
                 this.props.loadUser(user);
             }
+            else this.setState({errorHandler: true});
         })
     }
 
@@ -58,6 +60,10 @@ export default class Login extends Component {
                 <div className="lh-copy mt3">
                     <p className="f6 link dim black db pointer" onClick={this.props.onClickRegister}>Register</p>
                 </div>
+                { this.state.errorHandler === true && 
+                <div className="lh-copy mt3">
+                    <p className="f6 link dim red db">Bad form submission!!</p>
+                </div> }
             </form>
             </main>
         )
